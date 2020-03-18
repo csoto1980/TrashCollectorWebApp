@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TrashCollectorProject1.Models;
 
 namespace TrashCollectorProject1.Data
 {
@@ -12,5 +13,9 @@ namespace TrashCollectorProject1.Data
             : base(options)
         {
         }
-    }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+
+        }
+
 }
