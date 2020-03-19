@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TrashCollectorProject1.ActionFilters;
 using TrashCollectorProject1.Data;
 using TrashCollectorProject1.Models;
 
 namespace TrashCollectorProject1.Controllers
 {
+    [ServiceFilter(typeof(GlobalRouting))]
+    [Authorize(Roles = "Customer")]
+
     public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,9 +28,11 @@ namespace TrashCollectorProject1.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //var myCustomerProfile = _context.Customer.Where(c => c.IdentityUserId == userId).SingleOrDefault();
-            //var applicationDbContext = _context.Customer.Include(c => c.IdentityUser);
+            //Finding currently logged in user
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //Getting info from Customer table directly related to currently signed in user
+            var myCustomerProfile = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            var applicationDbContext = _context.Customers.Include(c => c.IdentityUser);
             return View(await _context.Customers.ToListAsync());
         }
 
@@ -62,6 +69,8 @@ namespace TrashCollectorProject1.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                customer.IdentityUserId = userId;
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

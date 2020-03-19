@@ -21,8 +21,9 @@ namespace TrashCollectorProject1.Models
         public int Balance { get; set; }
         public string PickupDay { get; set; }
 
-        //[ForeignKey("IdentityUser")]
-        //public string IdentityUserId { get; set; }
-        //public IdentityUser IdentityUser { get; set; }
+        [ForeignKey("IdentityUser")]
+        public string IdentityUserId { get; set; }
+        public IdentityUser IdentityUser { get; set; }
+
     }
 }

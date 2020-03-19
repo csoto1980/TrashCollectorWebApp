@@ -24,11 +24,22 @@ namespace TrashCollectorProject1.Data
                 {
                     Name = "Admin",
                     NormalizedName = "ADMIN"
-                }
-              );
+                },
+                 new IdentityRole
+                 {
+                     Name = "Customer",
+                     NormalizedName = "CUSTOMER",
+
+                 },
+                 new IdentityRole
+                 {
+                     Name = "Employee",
+                     NormalizedName = "EMPLOYEE",
+                 }
+                 );
         }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<TrashCollectorProject1.Models.Customer> Customers { get; set; }
+        public DbSet<TrashCollectorProject1.Models.Employee> Employees { get; set; }
 
         }
 

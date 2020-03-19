@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrashCollectorProject1.Data;
 
 namespace TrashCollectorProject1.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200319120856_v3")]
+    partial class v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,24 +50,10 @@ namespace TrashCollectorProject1.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2ed39333-fbeb-47da-8e34-5cd7a47a67db",
-                            ConcurrencyStamp = "e02ddb53-a04a-4c10-a76a-66f406a1dd10",
+                            Id = "32a4ed0c-dcb5-4521-84fc-68c002f01449",
+                            ConcurrencyStamp = "cfbef6f1-db48-446e-8125-14a8a8d7187d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "0e641830-d1bf-488f-863d-e25fea1a7204",
-                            ConcurrencyStamp = "b25064a0-7f1c-47d1-8445-c9252c4e110e",
-                            Name = "Customer",
-                            NormalizedName = "CUSTOMER"
-                        },
-                        new
-                        {
-                            Id = "dc1f9658-cb5b-4eb2-b5e6-2ab63fa4b3a6",
-                            ConcurrencyStamp = "2aa29268-408f-43a3-bd4c-04176308b91c",
-                            Name = "Employee",
-                            NormalizedName = "EMPLOYEE"
                         });
                 });
 
