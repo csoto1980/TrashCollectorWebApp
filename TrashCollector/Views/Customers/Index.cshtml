@@ -30,12 +30,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.ZipCode)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Balance)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PickupDay)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -60,16 +60,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ZipCode)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Balance)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PickupDay)
-            </td>
+            </td>*@
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.CustomerId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CustomerId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CustomerId">Delete</a>
             </td>
         </tr>
 }

@@ -8,7 +8,7 @@ namespace TrashCollector.Models
 {
     public class Pickup
     {
-        [Key]
+
         public int PickupId { get; set; }
         [Display(Name = "Pickup Day")]
         public string PickupDay { get; set; } //int?

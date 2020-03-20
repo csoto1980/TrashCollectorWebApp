@@ -10,7 +10,6 @@ namespace TrashCollector.Models
 {
     public class Customer
     {
-        [Key]
         public int CustomerId { get; set; }
 
         [Display(Name = "First Name")]
@@ -29,11 +28,11 @@ namespace TrashCollector.Models
         public int ZipCode { get; set; }
 
         [ForeignKey("Account")]
-        public string AccountId { get; set; }
+        public int AccountId { get; set; }
         public Account Account { get; set; }
 
         [ForeignKey("Pickup")]
-        public string PickupId { get; set; }
+        public int PickupId { get; set; }
         public Pickup Pickup { get; set; }
 
         [ForeignKey("IdentityUser")]

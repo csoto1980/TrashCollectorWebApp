@@ -8,9 +8,7 @@ namespace TrashCollector.Models
 {
     public class Account
     {
-        [Key]
         public int AccountId { get; set; }
-        public decimal Balance { get; set; }
-
+        public int Balance { get; set; }
     }
 }
