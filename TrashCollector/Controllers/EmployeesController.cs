@@ -42,11 +42,9 @@ namespace TrashCollector.Controllers
             }
 
             var employee = await _context.Employee
-<<<<<<< HEAD:TrashCollector/Controllers/EmployeesController.cs
+
                 .FirstOrDefaultAsync(m => m.EmployeeId == id);
-=======
-                .FirstOrDefaultAsync(m => m.Id == id);
->>>>>>> eb5413e08e1886fbe0b7f3b72a86df44676c3447:TrashCollectorProject1/Controllers/EmployeesController.cs
+
             if (employee == null)
             {
                 return NotFound();
@@ -137,11 +135,9 @@ namespace TrashCollector.Controllers
             }
 
             var employee = await _context.Employee
-<<<<<<< HEAD:TrashCollector/Controllers/EmployeesController.cs
+
                 .FirstOrDefaultAsync(m => m.EmployeeId == id);
-=======
-                .FirstOrDefaultAsync(m => m.Id == id);
->>>>>>> eb5413e08e1886fbe0b7f3b72a86df44676c3447:TrashCollectorProject1/Controllers/EmployeesController.cs
+
             if (employee == null)
             {
                 return NotFound();
@@ -163,11 +159,8 @@ namespace TrashCollector.Controllers
 
         private bool EmployeeExists(int id)
         {
-<<<<<<< HEAD:TrashCollector/Controllers/EmployeesController.cs
             return _context.Employee.Any(e => e.EmployeeId == id);
-=======
-            return _context.Employee.Any(e => e.Id == id);
->>>>>>> eb5413e08e1886fbe0b7f3b72a86df44676c3447:TrashCollectorProject1/Controllers/EmployeesController.cs
+
         }
     }
 }

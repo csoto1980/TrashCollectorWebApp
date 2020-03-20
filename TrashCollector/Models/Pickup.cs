@@ -8,11 +8,6 @@ namespace TrashCollector.Models
 {
     public class Pickup
     {
-<<<<<<< HEAD
-
-=======
-        [Key]
->>>>>>> eb5413e08e1886fbe0b7f3b72a86df44676c3447
         public int PickupId { get; set; }
         [Display(Name = "Pickup Day")]
         public string PickupDay { get; set; } //int?

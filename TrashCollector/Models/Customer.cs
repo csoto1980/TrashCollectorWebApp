@@ -10,10 +10,7 @@ namespace TrashCollector.Models
 {
     public class Customer
     {
-<<<<<<< HEAD:TrashCollector/Models/Customer.cs
-=======
-        [Key]
->>>>>>> eb5413e08e1886fbe0b7f3b72a86df44676c3447:TrashCollectorProject1/Models/Customer.cs
+
         public int CustomerId { get; set; }
 
         [Display(Name = "First Name")]
@@ -32,19 +29,11 @@ namespace TrashCollector.Models
         public int ZipCode { get; set; }
 
         [ForeignKey("Account")]
-<<<<<<< HEAD:TrashCollector/Models/Customer.cs
         public int AccountId { get; set; }
         public Account Account { get; set; }
 
         [ForeignKey("Pickup")]
         public int PickupId { get; set; }
-=======
-        public string AccountId { get; set; }
-        public Account Account { get; set; }
-
-        [ForeignKey("Pickup")]
-        public string PickupId { get; set; }
->>>>>>> eb5413e08e1886fbe0b7f3b72a86df44676c3447:TrashCollectorProject1/Models/Customer.cs
         public Pickup Pickup { get; set; }
 
         [ForeignKey("IdentityUser")]

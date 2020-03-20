@@ -17,11 +17,9 @@ namespace TrashCollector.Data
         }
         public DbSet<Employee> Employee { get; set; }
         public DbSet<Customer> Customer { get; set; }
-<<<<<<< HEAD:TrashCollector/Data/ApplicationDbContext.cs
         public DbSet<Account> Account { get; set; }
         public DbSet<Pickup> Pickup { get; set; }
-=======
->>>>>>> eb5413e08e1886fbe0b7f3b72a86df44676c3447:TrashCollectorProject1/Data/ApplicationDbContext.cs
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
