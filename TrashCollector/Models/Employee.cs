@@ -10,7 +10,11 @@ namespace TrashCollector.Models
 {
     public class Employee
     {
+<<<<<<< HEAD:TrashCollector/Models/Employee.cs
 
+=======
+        [Key]
+>>>>>>> eb5413e08e1886fbe0b7f3b72a86df44676c3447:TrashCollectorProject1/Models/Employee.cs
         public int EmployeeId { get; set; }
 
         [Display(Name = "First Name")]

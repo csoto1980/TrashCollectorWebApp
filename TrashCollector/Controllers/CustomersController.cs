@@ -48,7 +48,11 @@ namespace TrashCollector.Controllers
             }
 
             var customer = await _context.Customer
+<<<<<<< HEAD:TrashCollector/Controllers/CustomersController.cs
                 .FirstOrDefaultAsync(m => m.CustomerId == id);
+=======
+                .FirstOrDefaultAsync(m => m.Id == id);
+>>>>>>> eb5413e08e1886fbe0b7f3b72a86df44676c3447:TrashCollectorProject1/Controllers/CustomersController.cs
             if (customer == null)
             {
                 return NotFound();
@@ -139,7 +143,11 @@ namespace TrashCollector.Controllers
             }
 
             var customer = await _context.Customer
+<<<<<<< HEAD:TrashCollector/Controllers/CustomersController.cs
                 .FirstOrDefaultAsync(m => m.CustomerId == id);
+=======
+                .FirstOrDefaultAsync(m => m.Id == id);
+>>>>>>> eb5413e08e1886fbe0b7f3b72a86df44676c3447:TrashCollectorProject1/Controllers/CustomersController.cs
             if (customer == null)
             {
                 return NotFound();
@@ -161,7 +169,11 @@ namespace TrashCollector.Controllers
 
         private bool CustomerExists(int id)
         {
+<<<<<<< HEAD:TrashCollector/Controllers/CustomersController.cs
             return _context.Customer.Any(e => e.CustomerId == id);
+=======
+            return _context.Customer.Any(e => e.Id == id);
+>>>>>>> eb5413e08e1886fbe0b7f3b72a86df44676c3447:TrashCollectorProject1/Controllers/CustomersController.cs
         }
     }
 }
