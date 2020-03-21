@@ -19,8 +19,6 @@ namespace TrashCollector.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-     
-
         public CustomersController(ApplicationDbContext context)
         {
             _context = context;
@@ -29,14 +27,20 @@ namespace TrashCollector.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //customer.IdentityUserId = userId;
-            //_context.Add(customer);
-            //_context.SaveChanges();
-            var customer = _context.Customer.Where(c => c.IdentityUserId == userId).SingleOrDefault(); //refer to page 12
-            return View(await _context.Customer.ToListAsync());
+             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-
+            //Find if customer is in database
+            if (_context.Customer.Where(c => c.IdentityUserId == userId).Any())
+            {
+                //add customer view
+                CustomerView customerView = new CustomerView();
+                return View(customerView);
+            }
+            //If not create an account
+            else
+            {
+                return RedirectToAction("Create Customer Account");
+            }
         }
 
         // GET: Customers/Details/5
@@ -138,6 +142,10 @@ namespace TrashCollector.Controllers
             if (id == null)
             {
                 return NotFound();
+            }
+            else
+            {
+                
             }
 
             var customer = await _context.Customer

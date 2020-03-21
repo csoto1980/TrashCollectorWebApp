@@ -28,9 +28,19 @@ namespace TrashCollector.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var employeeInfo = _context.Employee.Where(e => e.IdentityUserId == userId).SingleOrDefault();
-            var applicationDbContext = _context.Employee.Include(e => e.IdentityUser);
-            return View(await applicationDbContext.ToListAsync());
+
+            //Find if employee is in database
+            if(_context.Employee.Where(e => e.IdentityUserId == userId).Any())
+            {
+                var employeeInfo = _context.Employee.Where(e => e.IdentityUserId == userId).SingleOrDefault();
+                EmployeeView employeeView = new EmployeeView();
+                return View(employeeView);
+            }
+            //If not create new account
+            else
+            {
+                return RedirectToAction("Create Employee Account");
+            }
         }
 
         // GET: Employees/Details/5
