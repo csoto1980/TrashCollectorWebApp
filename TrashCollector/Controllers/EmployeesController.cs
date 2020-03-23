@@ -13,6 +13,7 @@ using TrashCollector.Models;
 
 namespace TrashCollector.Controllers
 {
+    [Authorize]
     [Authorize(Roles = "Employee")]
     [ServiceFilter(typeof(GlobalRouting))]
     public class EmployeesController : Controller
@@ -39,7 +40,7 @@ namespace TrashCollector.Controllers
             //If not create new account
             else
             {
-                return RedirectToAction("Create Employee Account");
+                return RedirectToAction("Create");
             }
         }
 
@@ -53,7 +54,7 @@ namespace TrashCollector.Controllers
 
             var employee = await _context.Employee
 
-                .FirstOrDefaultAsync(m => m.EmployeeId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (employee == null)
             {
@@ -74,16 +75,37 @@ namespace TrashCollector.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,ZipCode")] Employee employee)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,ZipCode, IndentityUserId")] Employee employee)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    Employee newEmployee = new Employee()
+                    {
+                        FirstName = employee.FirstName,
+                        LastName = employee.LastName,
+                        ZipCode = employee.ZipCode,
+                        IdentityUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                    };
+                    _context.Add(newEmployee);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return View();
+                }
             }
-            return View(employee);
+            else
+            {
+                return View();
+            }
+
         }
+        //_context.Add(employee);
+        //await _context.SaveChangesAsync();
+        //return RedirectToAction(nameof(Index));
 
         // GET: Employees/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -108,7 +130,7 @@ namespace TrashCollector.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,ZipCode")] Employee employee)
         {
-            if (id != employee.EmployeeId)
+            if (id != employee.Id)
             {
                 return NotFound();
             }
@@ -122,7 +144,7 @@ namespace TrashCollector.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.EmployeeId))
+                    if (!EmployeeExists(employee.Id))
                     {
                         return NotFound();
                     }
@@ -145,8 +167,8 @@ namespace TrashCollector.Controllers
             }
 
             var employee = await _context.Employee
-
-                .FirstOrDefaultAsync(m => m.EmployeeId == id);
+                .Include(e => e.IdentityUser)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (employee == null)
             {
@@ -169,7 +191,7 @@ namespace TrashCollector.Controllers
 
         private bool EmployeeExists(int id)
         {
-            return _context.Employee.Any(e => e.EmployeeId == id);
+            return _context.Employee.Any(e => e.Id == id);
 
         }
     }

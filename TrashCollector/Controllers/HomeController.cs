@@ -11,8 +11,8 @@ using TrashCollector.Models;
 
 namespace TrashCollector.Controllers
 {
-    [Authorize(Roles = "Home")]
-    [ServiceFilter(typeof(GlobalRouting))]
+    //[Authorize(Roles = "Home")]
+    //[ServiceFilter(typeof(GlobalRouting))]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -10,8 +10,8 @@ namespace TrashCollector.Models
 {
     public class Customer
     {
-
-        public int CustomerId { get; set; }
+        [Key]
+        public int Id { get; set; }
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }

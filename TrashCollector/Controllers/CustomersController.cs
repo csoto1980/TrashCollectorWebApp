@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,12 +14,12 @@ using TrashCollector.Models;
 
 namespace TrashCollector.Controllers
 {
+    [Authorize]
     [Authorize(Roles = "Customer")]
-    [ServiceFilter(typeof(GlobalRouting))]
+    //[ServiceFilter(typeof(GlobalRouting))]
     public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;
-
         public CustomersController(ApplicationDbContext context)
         {
             _context = context;
@@ -27,20 +28,8 @@ namespace TrashCollector.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            //Find if customer is in database
-            if (_context.Customer.Where(c => c.IdentityUserId == userId).Any())
-            {
-                //add customer view
-                CustomerView customerView = new CustomerView();
-                return View(customerView);
-            }
-            //If not create an account
-            else
-            {
-                return RedirectToAction("Create Customer Account");
-            }
+            var applicationDbContext = _context.Customer.Include(c => c.IdentityUser);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Customers/Details/5
@@ -53,7 +42,7 @@ namespace TrashCollector.Controllers
 
             var customer = await _context.Customer
 
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (customer == null)
             {
@@ -66,6 +55,7 @@ namespace TrashCollector.Controllers
         // GET: Customers/Create
         public IActionResult Create()
         {
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -74,13 +64,48 @@ namespace TrashCollector.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,StreetAddress,City,State,ZipCode,Balance,PickupDay")] Customer customer)
+        public async Task<IActionResult> Create([Bind("CustomerId,FirstName,LastName,StreetAddress,City,State,ZipCode, IndentityUserId")] Customer customer, Account account) //,Pickup pickup)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    Account newAccount = new Account()
+                    {
+                        Id = account.Id,
+                        Balance = account.Balance
+                    };
+                    //Pickup newPickSchedule = new Pickup()
+                    //{
+                    //    PickupId = pickup.PickupId,
+                    //    PickupDay = pickup.PickupDay,
+                    //    OneDayPickup = pickup.OneDayPickup,
+                    //    TempSuspend = pickup.TempSuspend,
+                    //    StartSuspend = pickup.StartSuspend,
+                    //    EndSuspend = pickup.EndSuspend
+                    //};
+                    _context.Account.Add(newAccount);
+                    //_context.Pickup.Add(newPickSchedule);
+                    _context.SaveChanges();
+                    Customer newCustomer = new Customer()
+                    {
+                        IdentityUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                        FirstName = customer.FirstName,
+                        LastName = customer.LastName,
+                        AccountId = newAccount.Id,
+                        //PickupId = newPickSchedule.PickupId,
+                    };
+                    _context.Customer.Add(newCustomer);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return View();
+                }
+                //    _context.Add(customer);
+                //await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
             }
             return View(customer);
         }
@@ -108,7 +133,7 @@ namespace TrashCollector.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,StreetAddress,City,State,ZipCode,Balance,PickupDay")] Customer customer)
         {
-            if (id != customer.CustomerId)
+            if (id != customer.Id)
             {
                 return NotFound();
             }
@@ -122,7 +147,7 @@ namespace TrashCollector.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.CustomerId))
+                    if (!CustomerExists(customer.Id))
                     {
                         return NotFound();
                     }
@@ -150,7 +175,7 @@ namespace TrashCollector.Controllers
 
             var customer = await _context.Customer
 
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (customer == null)
             {
@@ -173,7 +198,7 @@ namespace TrashCollector.Controllers
 
         private bool CustomerExists(int id)
         {
-            return _context.Customer.Any(e => e.CustomerId == id);
+            return _context.Customer.Any(e => e.Id == id);
         }
     }
 }

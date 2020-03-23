@@ -8,7 +8,7 @@ using TrashCollector.Models;
 
 namespace TrashCollector.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -19,7 +19,8 @@ namespace TrashCollector.Data
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Account> Account { get; set; }
         public DbSet<Pickup> Pickup { get; set; }
-
+        public DbSet<CustomerView> CustomerView { get; set; }
+        public DbSet<EmployeeView> EmployeeView { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -41,6 +42,16 @@ namespace TrashCollector.Data
                 {
                     Name = "Employee",
                     NormalizedName = "EMPLOYEE"
+                },
+                new IdentityRole
+                {
+                    Name = "CustomerView",
+                    NormalizedName = "CUSTOMERVIEW"
+                },
+                new IdentityRole
+                {
+                    Name = "EmployeeView",
+                    NormalizedName = "EMPLOYEEVIEW"
                 }
                );
         }
