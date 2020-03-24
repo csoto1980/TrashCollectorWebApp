@@ -2,55 +2,53 @@
 
 namespace TrashCollectorApp.Data.Migrations
 {
-    public partial class V20 : Migration
+    public partial class V31 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "893fc66f-7a70-4a12-8707-3a63884e223a");
+                keyValue: "2690463c-04b0-428a-9c3e-42e65f1935a9");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "c0d79cab-ceb6-46af-beee-33c051665813");
+                keyValue: "312c6f03-48d6-41df-9fe6-baa7120dae7c");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "ddcf2394-98c0-42bd-a716-2f5983382f7d");
+                keyValue: "45192b00-7e13-4b1c-b316-7f168da128b2");
 
-            migrationBuilder.AlterColumn<decimal>(
+            migrationBuilder.AlterColumn<double>(
                 name: "PickupCharge",
-                table: "Account",
-                type: "decimal(4,2)",
+                table: "Accounts",
                 nullable: false,
                 oldClrType: typeof(decimal),
-                oldType: "decimal(18,2)");
+                oldType: "decimal(4,2)");
 
-            migrationBuilder.AlterColumn<decimal>(
+            migrationBuilder.AlterColumn<double>(
                 name: "Balance",
-                table: "Account",
-                type: "decimal(4,2)",
+                table: "Accounts",
                 nullable: false,
-                oldClrType: typeof(double),
-                oldType: "float");
+                oldClrType: typeof(decimal),
+                oldType: "decimal(4,2)");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "d61ebbe1-e68e-4ec4-bc6d-428c61127f88", "3193bd39-bfbb-4905-a76b-23d3b1c11f47", "Admin", "ADMIN" });
+                values: new object[] { "63203a9a-2a0e-4497-81e1-2b34fc627718", "403c1a19-eb9a-4e10-b5a0-72b134bac31a", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "334fb6f1-d0f5-4844-b2f5-804b89d11c6e", "f2eb2ab3-d397-4b66-a719-224bafe021cb", "Customer", "CUSTOMER" });
+                values: new object[] { "8695f0f9-3a29-4482-97df-56031371e494", "69621dbf-4d3b-4da3-bb88-d0f5619c58b3", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "8a75ba41-9633-4abd-adce-baf25baf1d30", "e03bdcb4-e5a4-4fa1-92ff-a3f0001e2c29", "Employee", "EMPLOYEE" });
+                values: new object[] { "e026a622-c802-468a-a910-69ca57082710", "289dbfad-017b-424b-85e7-75a3aa9202ea", "Employee", "EMPLOYEE" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -58,48 +56,46 @@ namespace TrashCollectorApp.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "334fb6f1-d0f5-4844-b2f5-804b89d11c6e");
+                keyValue: "63203a9a-2a0e-4497-81e1-2b34fc627718");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "8a75ba41-9633-4abd-adce-baf25baf1d30");
+                keyValue: "8695f0f9-3a29-4482-97df-56031371e494");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "d61ebbe1-e68e-4ec4-bc6d-428c61127f88");
+                keyValue: "e026a622-c802-468a-a910-69ca57082710");
 
             migrationBuilder.AlterColumn<decimal>(
                 name: "PickupCharge",
-                table: "Account",
-                type: "decimal(18,2)",
+                table: "Accounts",
+                type: "decimal(4,2)",
                 nullable: false,
-                oldClrType: typeof(decimal),
-                oldType: "decimal(4,2)");
+                oldClrType: typeof(double));
 
-            migrationBuilder.AlterColumn<double>(
+            migrationBuilder.AlterColumn<decimal>(
                 name: "Balance",
-                table: "Account",
-                type: "float",
+                table: "Accounts",
+                type: "decimal(4,2)",
                 nullable: false,
-                oldClrType: typeof(decimal),
-                oldType: "decimal(4,2)");
+                oldClrType: typeof(double));
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "c0d79cab-ceb6-46af-beee-33c051665813", "081075ad-b23a-4e13-b0cf-acd69d770f3a", "Admin", "ADMIN" });
+                values: new object[] { "2690463c-04b0-428a-9c3e-42e65f1935a9", "1520b0b6-2747-4916-a119-a8241ef00b08", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ddcf2394-98c0-42bd-a716-2f5983382f7d", "eb55452f-0c4d-4ff9-aebd-1a8a1ce5ac09", "Customer", "CUSTOMER" });
+                values: new object[] { "312c6f03-48d6-41df-9fe6-baa7120dae7c", "abc59321-f51b-4d52-b96e-703ed47f730a", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "893fc66f-7a70-4a12-8707-3a63884e223a", "a57cc906-8253-425e-8a95-e55ad12972a3", "Employee", "EMPLOYEE" });
+                values: new object[] { "45192b00-7e13-4b1c-b316-7f168da128b2", "8764c8cd-69ca-4dd5-90d8-e956441d29ed", "Employee", "EMPLOYEE" });
         }
     }
 }

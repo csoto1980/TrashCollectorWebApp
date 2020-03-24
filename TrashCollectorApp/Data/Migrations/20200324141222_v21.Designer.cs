@@ -11,7 +11,7 @@ namespace TrashCollectorApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20200324141222_v21")]
-    partial class v21
+    partial class V21
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -54,22 +54,28 @@
             @Html.DisplayFor(model => model.Account.PickupDay)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Account.OneDayPickup)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Account.OneDayPickup)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Account.StartPickupDate)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Account.StartPickupDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Account.EndPickupDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Account.EndPickupDate)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Account.SuspendPickup)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Account.SuspendPickup)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Account.EndPickupDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Account.EndPickupDate)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Account.Balance)

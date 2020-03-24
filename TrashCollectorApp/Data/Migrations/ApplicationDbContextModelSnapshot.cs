@@ -48,22 +48,22 @@ namespace TrashCollectorApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "33bc7037-36d2-40ed-8dc2-6add27416a16",
-                            ConcurrencyStamp = "a5d46e85-fa2b-4fd5-a1af-d9b201791025",
+                            Id = "b2a02681-ad58-45b8-bd1e-af6d4113a772",
+                            ConcurrencyStamp = "ea2586f4-77eb-4125-85ba-7139dbfa4b70",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a7770fcb-4bb7-479d-b96d-fac3f1ffbd32",
-                            ConcurrencyStamp = "06078519-0eda-45de-9814-8eb07595c697",
+                            Id = "ec4fccab-447c-48da-8958-289599ef2dbb",
+                            ConcurrencyStamp = "d44a8a8a-2b28-414f-8cd4-e7c059bea10c",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "20cc27e6-14d0-4ba4-bb1e-2d4f81deeb41",
-                            ConcurrencyStamp = "63321737-9027-46c0-a5fc-2bf9e692a131",
+                            Id = "07a8cf05-6949-4530-a1fc-bd1a33e6bb99",
+                            ConcurrencyStamp = "6e2a4512-4c13-4705-9220-d141f8790344",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -248,20 +248,23 @@ namespace TrashCollectorApp.Data.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(4,2)");
 
-                    b.Property<string>("EndPickupDate")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("EndPickupDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("OneDayPickup")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("OneDayPickup")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("PickupCharge")
                         .HasColumnType("decimal(4,2)");
 
-                    b.Property<string>("PickupDay")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("PickupComplete")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("StartPickupDate")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PickupDay")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartPickupDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("SuspendPickup")
                         .HasColumnType("bit");

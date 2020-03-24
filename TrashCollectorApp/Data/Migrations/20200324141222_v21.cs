@@ -2,7 +2,7 @@
 
 namespace TrashCollectorApp.Data.Migrations
 {
-    public partial class v21 : Migration
+    public partial class V21 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

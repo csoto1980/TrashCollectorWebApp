@@ -22,8 +22,6 @@ namespace TrashCollectorApp.Models
         [Display(Name = "Zip Code")]
         public string ZipCode { get; set; }
 
-        
-
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }

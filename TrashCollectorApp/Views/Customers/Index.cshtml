@@ -14,19 +14,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => model.Account.PickupComplete)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Address.StreetAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address.City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address.State)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Address.ZipCode)
@@ -34,26 +25,22 @@
             <th>
                 @Html.DisplayNameFor(model => model.Account.PickupDay)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account.OneDayPickup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account.Balance)
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
+                @Html.DisplayFor(modelItem => item.Account.PickupComplete)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.StreetAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address.State)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.ZipCode)
@@ -62,8 +49,16 @@
                 @Html.DisplayFor(modelItem => item.Account.PickupDay)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Account.OneDayPickup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.OneDayPickup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.Balance)
+            </td>
+            <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
