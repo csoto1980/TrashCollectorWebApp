@@ -14,7 +14,7 @@ using TrashCollectorApp.Models;
 namespace TrashCollectorApp.Controllers
 {
     //[Authorize]
-    //[Authorize(Roles = "Employee")]
+    [Authorize(Roles = "Employee")]
     //[ServiceFilter(typeof(GlobalRouting))]
     public class EmployeesController : Controller
     {
@@ -26,10 +26,23 @@ namespace TrashCollectorApp.Controllers
         }
 
         // GET: Employees
+        
         public async Task<IActionResult> Index()
         {
-            
-            var applicationDbContext = _context.Employee.Include(e => e.IdentityUser);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applicationDbContext = _context.Employees.Include(e => e.IdentityUser);
+
+            //List of todays pickups matching customers zip codes
+            //Lookup(int zipCode, string DayOfTheWeek)
+           
+            //Filter pickups by day
+
+            //Confirm pickup
+
+            //Charge customer for pickup
+
+            //Select customer profile and see their address with a pin on a map(Google Maps API)
+
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -41,7 +54,7 @@ namespace TrashCollectorApp.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customer
+            var customer = await _context.Customers
                 .Include(c => c.Account)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
@@ -64,16 +77,16 @@ namespace TrashCollectorApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Employee employee)
+        public async Task<IActionResult> Create(Employee employees)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
+                _context.Add(employees);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", employee.IdentityUserId);
-            return View(employee);
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", employees.IdentityUserId);
+            return View(employees);
         }
 
         // GET: Employees/Edit/5
@@ -84,13 +97,13 @@ namespace TrashCollectorApp.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employee.FindAsync(id);
-            if (employee == null)
+            var employees = await _context.Employees.FindAsync(id);
+            if (employees == null)
             {
                 return NotFound();
             }
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", employee.IdentityUserId);
-            return View(employee);
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", employees.IdentityUserId);
+            return View(employees);
         }
 
         // POST: Employees/Edit/5
@@ -98,9 +111,9 @@ namespace TrashCollectorApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Employee employee)
+        public async Task<IActionResult> Edit(int id, Employee employees)
         {
-            if (id != employee.Id)
+            if (id != employees.Id)
             {
                 return NotFound();
             }
@@ -109,12 +122,12 @@ namespace TrashCollectorApp.Controllers
             {
                 try
                 {
-                    _context.Update(employee);
+                    _context.Update(employees);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.Id))
+                    if (!EmployeeExists(employees.Id))
                     {
                         return NotFound();
                     }
@@ -125,8 +138,8 @@ namespace TrashCollectorApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", employee.IdentityUserId);
-            return View(employee);
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", employees.IdentityUserId);
+            return View(employees);
         }
 
         // GET: Employees/Delete/5
@@ -137,7 +150,7 @@ namespace TrashCollectorApp.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employee
+            var employee = await _context.Employees
                 .Include(e => e.IdentityUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
@@ -153,15 +166,15 @@ namespace TrashCollectorApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Employee.FindAsync(id);
-            _context.Employee.Remove(employee);
+            var employee = await _context.Employees.FindAsync(id);
+            _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool EmployeeExists(int id)
         {
-            return _context.Employee.Any(e => e.Id == id);
+            return _context.Employees.Any(e => e.Id == id);
         }
     }
 }

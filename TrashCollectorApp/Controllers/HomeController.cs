@@ -25,14 +25,14 @@ namespace TrashCollectorApp.Controllers
 
         public IActionResult Index()
         {
-            if (User.IsInRole("Customer"))
+            if (User.IsInRole("Customers"))
             {
-                return RedirectToAction("Index", "Customer");
+                return RedirectToAction("Index", "Customers");
 
             }
-            else if (User.IsInRole("Employee"))
+            else if (User.IsInRole("Employees"))
             {
-                return RedirectToAction("Index", "Employee");
+                return RedirectToAction("Index", "Employees");
 
             }
             return View();

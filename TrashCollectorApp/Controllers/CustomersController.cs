@@ -14,7 +14,7 @@ using TrashCollectorApp.Models;
 namespace TrashCollectorApp.Controllers
 {
     //[Authorize]
-    //[Authorize(Roles = "Customer")]
+    [Authorize(Roles = "Customer")]
     //[ServiceFilter(typeof(GlobalRouting))]
     public class CustomersController : Controller
     {
@@ -30,18 +30,19 @@ namespace TrashCollectorApp.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var currentUser = _context.Customer.Include(c => c.Account).Include(c => c.Address).Where(c => c.IdentityUserId == userId).ToListAsync();
+            var currentUser = _context.Customers.Include(c => c.Account).Include(c => c.Address).Where(c => c.IdentityUserId == userId).ToListAsync();
             return View(currentUser);
         }
 
         // GET: Customers/Details/5
+        
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var customer = await _context.Customer
+            var customer = await _context.Customers
                 .Include(c => c.Account)
                 .Include(c => c.Address)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -54,6 +55,8 @@ namespace TrashCollectorApp.Controllers
         }
 
         // GET: Customers/Create
+        //[Authorize(Roles = "Customer")]
+        
         public IActionResult Create()
         {
             ViewData["AccountId"] = new SelectList(_context.Set<Account>(), "Id", "Id");
@@ -66,21 +69,21 @@ namespace TrashCollectorApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Customer customer)
+        public async Task<IActionResult> Create(Customer customers)
         {
             if (ModelState.IsValid)
             {
-                _context.Address.Add(customer.Address);
+                _context.Addresses.Add(customers.Address);
                 _context.SaveChanges();
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                customer.IdentityUserId = userId;
-                _context.Add(customer);
+                customers.IdentityUserId = userId;
+                _context.Add(customers);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountId"] = new SelectList(_context.Set<Account>(), "Id", "Id", customer.AccountId);
-            ViewData["AddressId"] = new SelectList(_context.Set<Address>(), "Id", "Id", customer.AddressId);
-            return View(customer);
+            ViewData["AccountId"] = new SelectList(_context.Set<Account>(), "Id", "Id", customers.AccountId);
+            ViewData["AddressId"] = new SelectList(_context.Set<Address>(), "Id", "Id", customers.AddressId);
+            return View(customers);
         }
 
         // GET: Customers/Edit/5
@@ -91,14 +94,14 @@ namespace TrashCollectorApp.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customer.FindAsync(id);
-            if (customer == null)
+            var customers = await _context.Customers.FindAsync(id);
+            if (customers == null)
             {
                 return NotFound();
             }
-            ViewData["AccountId"] = new SelectList(_context.Set<Account>(), "Id", "Id", customer.AccountId);
-            ViewData["AddressId"] = new SelectList(_context.Set<Address>(), "Id", "Id", customer.AddressId);
-            return View(customer);
+            ViewData["AccountId"] = new SelectList(_context.Set<Account>(), "Id", "Id", customers.AccountId);
+            ViewData["AddressId"] = new SelectList(_context.Set<Address>(), "Id", "Id", customers.AddressId);
+            return View(customers);
         }
 
         // POST: Customers/Edit/5
@@ -106,9 +109,9 @@ namespace TrashCollectorApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Customer customer)
+        public async Task<IActionResult> Edit(int id, Customer customers)
         {
-            if (id != customer.Id)
+            if (id != customers.Id)
             {
                 return NotFound();
             }
@@ -117,13 +120,13 @@ namespace TrashCollectorApp.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Update(customers);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.Id))
+                    if (!CustomerExists(customers.Id))
                     {
                         return NotFound();
                     }
@@ -133,9 +136,9 @@ namespace TrashCollectorApp.Controllers
                     }
                 }
             }
-            ViewData["AccountId"] = new SelectList(_context.Set<Account>(), "Id", "Id", customer.AccountId);
-            ViewData["AddressId"] = new SelectList(_context.Set<Address>(), "Id", "Id", customer.AddressId);
-            return View(customer);
+            ViewData["AccountId"] = new SelectList(_context.Set<Account>(), "Id", "Id", customers.AccountId);
+            ViewData["AddressId"] = new SelectList(_context.Set<Address>(), "Id", "Id", customers.AddressId);
+            return View(customers);
         }
 
         // GET: Customers/Delete/5
@@ -146,16 +149,16 @@ namespace TrashCollectorApp.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customer
+            var customers = await _context.Customers
                 .Include(c => c.Account)
                 .Include(c => c.Address)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (customers == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(customers);
         }
 
         // POST: Customers/Delete/5
@@ -163,15 +166,15 @@ namespace TrashCollectorApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var customer = await _context.Customer.FindAsync(id);
-            _context.Customer.Remove(customer);
+            var customers = await _context.Customers.FindAsync(id);
+            _context.Customers.Remove(customers);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CustomerExists(int id)
         {
-            return _context.Customer.Any(e => e.Id == id);
+            return _context.Customers.Any(e => e.Id == id);
         }
     }
 }

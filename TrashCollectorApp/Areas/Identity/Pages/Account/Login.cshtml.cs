@@ -84,6 +84,7 @@ namespace TrashCollectorApp.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
+
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -100,7 +101,6 @@ namespace TrashCollectorApp.Areas.Identity.Pages.Account
                     return Page();
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return Page();
         }
